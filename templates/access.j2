@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for entry in postfix_access_config_options %}
+{{ entry.client }} {{ entry.action }}
+{% endfor %}

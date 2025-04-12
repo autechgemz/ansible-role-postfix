@@ -1,0 +1,25 @@
+---
+
+- name: Reload postfix
+  ansible.builtin.systemd:
+    name: "{{ postfix_service_name }}"
+    state: reloaded
+  when: not ansible_check_mode
+
+- name: Restart postfix
+  ansible.builtin.systemd:
+    name: "{{ postfix_service_name }}"
+    state: restarted
+  when: not ansible_check_mode
+
+- name: Rebuild transport map
+  ansible.builtin.command:
+    cmd: "postmap {{ postfix_transport_config_file }}"
+    creates: "{{ postfix_transport_config_file }}.db"
+  when: not ansible_check_mode
+
+- name: Rebuild access map
+  ansible.builtin.command:
+    cmd: "postmap {{ postfix_access_config_file }}"
+    creates: "{{ postfix_access_config_file }}.db"
+  when: not ansible_check_mode

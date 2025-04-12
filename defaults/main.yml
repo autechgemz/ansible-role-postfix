@@ -1,0 +1,256 @@
+---
+
+postfix_debug: false
+
+postfix_package_ensure: 'present'
+
+postfix_package_name:
+  - postfix
+
+postfix_service_name: 'postfix'
+
+postfix_service_ensure: 'started'
+
+postfix_service_enable: true
+
+postfix_main_config_file: '/etc/postfix/main.cf'
+
+postfix_main_config_options: {}
+
+postfix_master_config_options: []
+
+postfix_master_config_file: '/etc/postfix/master.cf'
+postfix_master_config_default:
+  - name: smtp
+    type: inet
+    priv: n
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: smtpd
+    enabled: true
+  - name: pickup
+    type: unix
+    priv: n
+    unpriv: '-'
+    chroot: n
+    wakeup: '60'
+    maxproc: '1'
+    command: pickup
+    enabled: true
+  - name: cleanup
+    type: unix
+    priv: n
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '0'
+    command: cleanup
+    enabled: true
+  - name: qmgr
+    type: unix
+    priv: n
+    unpriv: '-'
+    chroot: n
+    wakeup: '300'
+    maxproc: '1'
+    command: qmgr
+    enabled: true
+  - name: tlsmgr
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: 1000?
+    maxproc: '1'
+    command: tlsmgr
+    enabled: true
+  - name: rewrite
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: trivial-rewrite
+    enabled: true
+  - name: bounce
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '0'
+    command: bounce
+    enabled: true
+  - name: defer
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '0'
+    command: bounce
+    enabled: true
+  - name: trace
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '0'
+    command: bounce
+    enabled: true
+  - name: verify
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '1'
+    command: verify
+    enabled: true
+  - name: flush
+    type: unix
+    priv: n
+    unpriv: '-'
+    chroot: n
+    wakeup: 1000?
+    maxproc: '0'
+    command: flush
+    enabled: true
+  - name: proxymap
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: proxymap
+    enabled: true
+  - name: proxywrite
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '1'
+    command: proxymap
+    enabled: true
+  - name: smtp
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: smtp
+    enabled: true
+  - name: relay
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: smtp
+    options:
+      - syslog_name=postfix/$service_name
+    enabled: true
+  - name: showq
+    type: unix
+    priv: n
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: showq
+    enabled: true
+  - name: error
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: error
+    enabled: true
+  - name: retry
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: error
+    enabled: true
+  - name: discard
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: discard
+    enabled: true
+  - name: local
+    type: unix
+    priv: '-'
+    unpriv: n
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: local
+    enabled: true
+  - name: virtual
+    type: unix
+    priv: '-'
+    unpriv: n
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: virtual
+    enabled: true
+  - name: lmtp
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '-'
+    command: lmtp
+    enabled: true
+  - name: anvil
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '1'
+    command: anvil
+    enabled: true
+  - name: scache
+    type: unix
+    priv: '-'
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '1'
+    command: scache
+    enabled: true
+  - name: postlog
+    type: unix-dgram
+    priv: n
+    unpriv: '-'
+    chroot: n
+    wakeup: '-'
+    maxproc: '1'
+    command: postlogd
+    enabled: true
+
+postfix_transport_config_file: '/etc/postfix/transport'
+postfix_transport_config_options: {}
+
+postfix_access_config_file: '/etc/postfix/access'
+postfix_access_config_options: {}

@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+{% for entry in postfix_transport_config_options %}
+{{ entry.domain }} {{ entry.transport }}
+{% endfor %}

@@ -1,0 +1,31 @@
+---
+
+- name: Debug config tasks
+  when: postfix_debug | default(false)
+  block:
+
+    - name: Debug default configs
+      debug:
+        var: "{{ item }}"
+      when: postfix_debug | default(false)
+      loop:
+        - postfix_main_config_parsed
+        - postfix_master_config_parsed
+
+    - name: Debug vars configs
+      debug:
+        var: "{{ item }}"
+      when: postfix_debug | default(false)
+      loop:
+        - postfix_main_config_yaml
+        - postfix_master_config_yaml
+
+    - name: Debug main.cf variables
+      debug:
+        var: postfix_main_config_merged
+      when: postfix_debug | default(false)
+
+    - name: Debug master.cf variables
+      debug:
+        var: postfix_master_config_map
+      when: postfix_debug | default(false)

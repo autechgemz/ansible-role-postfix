@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+{% if postfix_main_config_merged is defined %}
+{%   for key, value in postfix_main_config_merged.items() %}
+{%     if value is not none and value is iterable and (value is not string and value is not mapping) %}
+{%       for item in value %}
+{{ key }} = {{ item }}
+{%       endfor %}
+{%     elif value is not none %}
+{{ key }} = {{ value }}
+{%     endif %}
+{%   endfor %}
+{% endif %}

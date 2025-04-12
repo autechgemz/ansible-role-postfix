@@ -1,0 +1,27 @@
+# {{ ansible_managed }}
+{% set disabled_keys = [] -%}
+{% for svc in postfix_master_config_merged -%}
+  {% if svc.enabled is defined and svc.enabled == false -%}
+    {% set _ = disabled_keys.append(svc.name ~ '/' ~ svc.type ~ '/' ~ svc.command) -%}
+  {% endif -%}
+{% endfor -%}
+{%- for service in postfix_master_config_merged %}
+  {%- set key = service.name ~ '/' ~ service.type ~ '/' ~ service.command -%}
+  {%- if service.enabled and (key not in disabled_keys) -%}
+{{ "%-12s %-6s %-3s %-3s %-3s %-6s %-7s %s\n" | format(
+  service.name,
+  service.type,
+  service.priv,
+  service.unpriv,
+  service.chroot,
+  service.wakeup,
+  service.maxproc,
+  service.command
+) }}
+    {%- if service.options is defined %}
+      {%- for opt in service.options %}
+{{ '  -o ' ~ opt ~ '\n' }}
+      {%- endfor %}
+    {%- endif %}
+  {%- endif %}
+{%- endfor %}

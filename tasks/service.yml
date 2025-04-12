@@ -1,0 +1,14 @@
+---
+
+- name: Service tasks
+  tags:
+    - postfix_service
+    - postfix
+  become: true
+  block:
+    - name: Manage service
+      ansible.builtin.service:
+        name: "{{ postfix_service_name }}"
+        state: "{{ postfix_service_ensure }}"
+        enabled: "{{ postfix_service_enable }}"
+      when: not ansible_check_mode
